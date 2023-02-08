@@ -3,7 +3,8 @@ import sushiImg from '../../assets/suwuu.jpg'
 import styles from './Header.module.css'
 import {HeaderCartButton} from "./HeaderCartButton";
 
-export const Header = function () {
+export const Header = function (props) {
+    // console.log(props)
 
 
     return (
@@ -11,7 +12,7 @@ export const Header = function () {
 
             <header className={styles.header}>
                 <h1>Japanesse sushi さかな </h1>
-                <HeaderCartButton/>
+                <HeaderCartButton onClick={props.onShowCart}/>
             </header>
             <div className={styles['main-image']}>
                 <img src={sushiImg} alt={'sushi'}></img>
