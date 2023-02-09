@@ -8,6 +8,8 @@ import styles from './HeaderCartButton.module.css'
 
 export const HeaderCartButton = function (props) {
     const cartContext = useContext(CartContext)
+    // console.log(cartContext.items)
+    // console.log('cart btn')
 
     const cartItemsNumber = cartContext.items.reduce((currentValue, item) => {
         return currentValue + item.amount

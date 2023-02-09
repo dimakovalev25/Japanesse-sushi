@@ -29,6 +29,18 @@ const DUMMY_MEALS = [
             "Rice, salmon, cucumber, chuka, nori, tuna shavings, walnut sauce",
         price: 7.99,
     },
+    {
+        id: "m5",
+        name: "Sushi with snake",
+        description: "Smoked eel, unagi sauce, sesame",
+        price: 19.99,
+    },
+    {
+        id: "m6",
+        name: "Sushi with rock",
+        description: "Smoked eel, unagi sauce, sesame",
+        price: 9.99,
+    }
 ];
 
 export const MealList = function () {
