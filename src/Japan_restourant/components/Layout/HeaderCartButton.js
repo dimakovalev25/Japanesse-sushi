@@ -10,8 +10,6 @@ export const HeaderCartButton = function (props) {
     const [buttonIsAnimated, setButtonIsAnimated] = useState(false)
 
     const cartContext = useContext(CartContext)
-    // console.log(cartContext.items)
-    // console.log('cart btn')
 
     const cartItemsNumber = cartContext.items.reduce((currentValue, item) => {
         return currentValue + item.amount

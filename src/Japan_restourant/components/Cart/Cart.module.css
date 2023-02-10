@@ -6,6 +6,17 @@
     overflow: auto;
 }
 
+.cartinput {
+    border-color: #f58766;
+    height: 2.3rem;
+    width: 8rem;
+    border-radius: 23px;
+    padding-left: 15px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+
+}
+
 .total {
     display: flex;
     justify-content: space-between;

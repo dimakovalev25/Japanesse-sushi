@@ -6,8 +6,8 @@ const App = () => {
 
     return (
         <div className={'app'}>
-            {/*<AppRest/>*/}
-            <AppReactInside/>
+            <AppRest/>
+            {/*<AppReactInside/>*/}
         </div>
     );
 };

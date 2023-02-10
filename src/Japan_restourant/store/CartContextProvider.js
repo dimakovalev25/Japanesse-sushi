@@ -6,6 +6,7 @@ import {useReducer} from "react";
 const defaultCartState = {
     items: [],
     totalAmount: 0,
+    promocod: ['111', '112', '113']
 }
 const cartReducer = (state, action) => {
     if (action.type === 'ADD_ITEM') {
@@ -34,12 +35,35 @@ const cartReducer = (state, action) => {
             updatedItems = state.items.concat(updatedItem)
         }
         return {
+            ...state,
             items: updatedItems,
             totalAmount: updatedTotalAmount,
         }
     }
 
+    if (action.type === 'ADD_PROMOCOD') {
 
+        if (state.promocod.includes(action.promo)) {
+            const updatedTotalAmount = state.totalAmount * 0.93;
+
+            const updatedPromocodIndex = state.promocod.indexOf(action.promo);
+            const updatedPromocod = state.promocod;
+            if(updatedPromocodIndex !== -1) {
+                updatedPromocod.splice(updatedPromocodIndex, 1)
+            }
+
+            return {
+                ...state,
+                totalAmount: updatedTotalAmount,
+                promocod: updatedPromocod
+            }
+
+        }
+        return {
+            ...state
+        }
+
+    }
     if (action.type === 'REMOVE_ITEM') {
 
 
@@ -72,13 +96,18 @@ const cartReducer = (state, action) => {
 const CartContextProvider = function (props) {
 
     const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultCartState);
-    // console.log(cartState)
-
     const addItemHandler = item => {
         dispatchCartAction({
             type: 'ADD_ITEM',
             item: item
         });
+    }
+
+    const addPromocod = promo => {
+        dispatchCartAction({
+            type: 'ADD_PROMOCOD',
+            promo: promo,
+        })
     }
     const removeItemHandler = id => {
         dispatchCartAction({
@@ -90,11 +119,12 @@ const CartContextProvider = function (props) {
     const cartContext = {
         name: 'Japanesse sushi さかな',
         items: cartState.items,
+        promocod: ['111', '112', '113'],
         totalAmount: cartState.totalAmount,
         addItem: addItemHandler,
-        removeItem: removeItemHandler
+        removeItem: removeItemHandler,
+        addPromoCod: addPromocod,
     }
-    console.log(cartContext)
 
     return (
         <CartContext.Provider value={cartContext}>{props.children}</CartContext.Provider>

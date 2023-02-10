@@ -1,6 +1,8 @@
 import styles from './ButtonReact.module.css'
+import React from "react";
 
 const ButtonReactInside = function (props) {
+    console.log('button')
     return (
         <button
             type={props.type || 'button'}

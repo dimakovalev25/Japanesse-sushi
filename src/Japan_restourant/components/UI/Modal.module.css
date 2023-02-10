@@ -9,6 +9,13 @@
     background-color: rgba(0, 0, 0, 0.75);
 }
 
+
+.cart-input {
+    border-color: #de4f1e;
+    height: 10rem;
+
+}
+
 .modal {
     position: fixed;
     top: 20vh;
