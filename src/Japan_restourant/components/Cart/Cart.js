@@ -5,23 +5,28 @@ import CartContext from "../../store/cart-context";
 import CartItem from "./CartItem";
 
 const Cart = function (props) {
-
-    const [showPromoForm, setShowPromoForm] = useState(true)
-    // console.log('promoForm')
-    // console.log(showPromoForm)
+    const cartContext = useContext(CartContext);
 
     const amountInputRef = useRef();
+    const totalAmount = (Math.abs(cartContext.totalAmount).toFixed(2)) + ' $';
+    const hasItems = cartContext.items.length > 0;
+
+    const [showPromoError, setShowPromoError] = useState(true);
+
     const setInputValue = (e) => {
         e.preventDefault();
         const inputAmount = amountInputRef.current.value;
         cartContext.addPromoCod(inputAmount);
-        setShowPromoForm(false);
+
+        let checkPromo = cartContext.promocod.includes(inputAmount);
+        if (checkPromo === false) {
+            setShowPromoError(false)
+        } else if (checkPromo === true) {
+            setShowPromoError(true)
+        }
+
 
     }
-
-    const cartContext = useContext(CartContext);
-    const totalAmount = (Math.abs(cartContext.totalAmount).toFixed(2)) + ' $';
-    const hasItems = cartContext.items.length > 0;
 
     const removeCartItemHandler = (id) => {
         cartContext.removeItem(id);
@@ -56,10 +61,19 @@ const Cart = function (props) {
             </div>
             <div className={styles.actions}>
 
-                { showPromoForm && <form onSubmit={setInputValue}>
-                    <input ref={amountInputRef} className={styles.cartinput} placeholder={'Enter promo'}
-                           type={'text'}></input>
-                </form>}
+                {!cartContext.usedPromocod ? <form onSubmit={setInputValue}>
+                    <input
+                        ref={amountInputRef}
+                        className={styles.cartinput}
+                        placeholder={'add promoCod and press ENTER'}
+                        type={'text'}>
+                    </input>
+                </form>  : ''}
+
+                {!showPromoError ? <p style={{color : 'red'}}>promo code is not valid! try another!</p> : '' }
+
+                {!cartContext.usedPromocod ? '' : <p style={{color : '#f36b40'}}>your discount is approved!</p>}
+
 
                 <button onClick={props.onHideCart} className={styles['button--alt']}>Close</button>
                 {hasItems && <button className={styles.button}>Order</button>}

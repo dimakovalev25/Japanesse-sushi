@@ -6,7 +6,8 @@ import {useReducer} from "react";
 const defaultCartState = {
     items: [],
     totalAmount: 0,
-    promocod: ['111', '112', '113']
+    promocod: ['1111', '1112', '1113'],
+    usedPromocod: false,
 }
 const cartReducer = (state, action) => {
     if (action.type === 'ADD_ITEM') {
@@ -55,15 +56,18 @@ const cartReducer = (state, action) => {
             return {
                 ...state,
                 totalAmount: updatedTotalAmount,
-                promocod: updatedPromocod
+                promocod: updatedPromocod,
+                usedPromocod: true,
             }
 
         }
         return {
-            ...state
+            ...state,
+            usedPromocod: false,
         }
 
     }
+
     if (action.type === 'REMOVE_ITEM') {
 
 
@@ -85,6 +89,7 @@ const cartReducer = (state, action) => {
             updatedItems[existingCartItemIndex] = updatedItem;
         }
         return {
+            ...state,
             items: updatedItems,
             totalAmount: updatedTotalAmount
         }
@@ -119,11 +124,12 @@ const CartContextProvider = function (props) {
     const cartContext = {
         name: 'Japanesse sushi さかな',
         items: cartState.items,
-        promocod: ['111', '112', '113'],
+        promocod: cartState.promocod,
         totalAmount: cartState.totalAmount,
         addItem: addItemHandler,
         removeItem: removeItemHandler,
         addPromoCod: addPromocod,
+        usedPromocod: cartState.usedPromocod,
     }
 
     return (
