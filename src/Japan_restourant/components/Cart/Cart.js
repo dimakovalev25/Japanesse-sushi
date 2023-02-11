@@ -19,12 +19,12 @@ const Cart = function (props) {
         cartContext.addPromoCod(inputAmount);
 
         let checkPromo = cartContext.promocod.includes(inputAmount);
+        console.log(checkPromo)
         if (checkPromo === false) {
             setShowPromoError(false)
         } else if (checkPromo === true) {
             setShowPromoError(true)
         }
-
 
     }
 
@@ -51,7 +51,6 @@ const Cart = function (props) {
         </ul>
     );
 
-
     return (
         <Modal onHideCart={props.onHideCart}>
             {cartItems}
@@ -68,11 +67,11 @@ const Cart = function (props) {
                         placeholder={'add promoCod and press ENTER'}
                         type={'text'}>
                     </input>
-                </form>  : ''}
+                </form> : ''}
 
-                {!showPromoError ? <p style={{color : 'red'}}>promo code is not valid! try another!</p> : '' }
+                {!showPromoError && !cartContext.usedPromocod ? <p style={{color: 'red'}}>promo code is not valid! try another!</p> : ''}
 
-                {!cartContext.usedPromocod ? '' : <p style={{color : '#f36b40'}}>your discount is approved!</p>}
+                {!cartContext.usedPromocod ? '' : <p style={{color: '#f36b40'}}>your discount is approved!</p>}
 
 
                 <button onClick={props.onHideCart} className={styles['button--alt']}>Close</button>
