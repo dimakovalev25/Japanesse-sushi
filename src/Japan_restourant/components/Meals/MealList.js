@@ -1,6 +1,10 @@
+import React, {useEffect} from "react";
+
 import styles from './MealList.module.css'
 import Card from "../UI/Card";
 import MealItem from "./MealItem/MealItem";
+
+import useHttp from "../NewMeals/hooks/use-http";
 
 const DUMMY_MEALS = [
     {
@@ -42,8 +46,43 @@ const DUMMY_MEALS = [
         price: 9.99,
     }
 ];
+let MEALS_LIST = [];
 
 export const MealList = function () {
+
+
+    useEffect(() => {
+
+        const getMealList = fetch('https://react-course-86712-default-rtdb.europe-west1.firebasedatabase.app/products.json')
+            .then(response => response.json())
+            .then(data => {
+                MEALS_LIST = data;
+                console.log(MEALS_LIST)
+            })
+            .catch(err => console.error(err))
+
+
+    }, [])
+
+    const manageProducts = function (data) {
+        const loadedProducts = [];
+        for (const productKey in data) {
+            loadedProducts.push(
+                {
+                    id: data[productKey].id,
+                    description: data[productKey].description,
+                    name: data[productKey].name,
+                    price: data[productKey].price,
+                }
+            );
+        }
+        return loadedProducts;
+    }
+
+    const {isLoading, error, sendHttpRequest} = useHttp();
+
+    const getMeal = sendHttpRequest('https://react-course-86712-default-rtdb.europe-west1.firebasedatabase.app/products.json');
+    console.log(getMeal)
 
     const mealList = DUMMY_MEALS.map((meal) => <MealItem
         description={meal.description}
@@ -60,4 +99,3 @@ export const MealList = function () {
         </section>
     )
 }
-
