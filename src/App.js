@@ -1,13 +1,13 @@
 import "./App.css";
+import {AppRest} from "./Japan_restourant/AppRest";
 import AppHttpHook from "./useHttpHook/AppHttpHook";
-import SomeInput from "./Input/SomeInput";
 
 const App = () => {
 
     return (
         <div className={'app'}>
-            {/*<AppHttpHook></AppHttpHook>*/}
-            <SomeInput/>
+            <AppRest></AppRest>
+            <AppHttpHook/>
         </div>
     );
 };
