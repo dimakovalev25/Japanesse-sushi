@@ -1,5 +1,7 @@
 import React, {useCallback, useState} from "react";
 
+
+// 'https://react-course-86712-default-rtdb.europe-west1.firebasedatabase.app/products.json'
 const useHttp = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -15,16 +17,13 @@ const useHttp = () => {
         });
 
         if (!response.ok) {
-          throw new Error("Ошибка запроса.");
+          throw new Error("error.");
         }
-
         const data = await response.json();
-
         manageData(data);
 
-
       } catch (err) {
-        setError(err.message || "Что-то пошло не так...");
+        setError(err.message || "error..");
       }
       setIsLoading(false);
     }, []) ;
@@ -33,9 +32,7 @@ const useHttp = () => {
       isLoading: isLoading,
       error: error,
       sendHttpRequest: sendHttpRequest
-
     }
-
 }
 
 export default useHttp;

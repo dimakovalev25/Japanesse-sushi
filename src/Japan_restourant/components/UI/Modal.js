@@ -25,7 +25,6 @@ const Modal = function (props) {
         <React.Fragment>
             {ReactDOM.createPortal(<Backdrop onHideCart={props.onHideCart}/>, portalElement)}
             {ReactDOM.createPortal(<ModalWindow>{props.children}</ModalWindow>, portalElement)}
-
         </React.Fragment>
     )
 

@@ -23,7 +23,7 @@ const ProductForm = (props) => {
                 price: enteredPrice
             }
 
-            console.log(enteredValue)
+            // console.log(enteredValue)
             props.onEnterProduct(enteredValue);
 
             productInputRef.current.value='';
