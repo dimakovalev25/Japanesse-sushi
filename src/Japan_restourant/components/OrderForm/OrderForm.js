@@ -16,13 +16,8 @@ const OrderForm = function ({cartOrder}) {
         email: '',
     });
     const [isShowOrderProof, setIsShowOrderProof] = useState(false);
-    const [enteredName, setEnteredName] = useState('');
+    const [isFormValid, setIsFormValid] = useState(true)
 
-    console.log(enteredName)
-
-    const nameInputchangeHandler = (e) => {
-        setEnteredName(e.target.value);
-    }
 
     const mainOrder = {...cartOrder, orderUserInfo}
     // console.log(mainOrder)
@@ -40,7 +35,7 @@ const OrderForm = function ({cartOrder}) {
         const telValue = telRef.current.value;
         const emailValue = emailRef.current.value;
 
-        if(nameValue.trim() !== '' && addressValue.trim() !== '' && telValue.trim() !== '' && emailValue.trim() !== ''){
+        if (nameValue.trim() !== '' && addressValue.trim() !== '' && telValue.trim() !== '' && emailValue.trim() !== '') {
             setOrderUserInfo({
                 name: nameValue,
                 address: addressValue,
@@ -48,20 +43,19 @@ const OrderForm = function ({cartOrder}) {
                 email: emailValue
             })
             setIsShowOrderProof(true)
-
-
             // bad practice
-            nameRef.current.value='';
-            addressRef.current.value='';
-            telRef.current.value='';
-            emailRef.current.value='';
-
+            nameRef.current.value = '';
+            addressRef.current.value = '';
+            telRef.current.value = '';
+            emailRef.current.value = '';
             enterProductHandler(mainOrder)
+
+            setIsFormValid(true)
+        } else {
+            setIsFormValid(false)
         }
 
     }
-
-
     const enterProductHandler = async (mainOrder) => {
         try {
             const response = await fetch(
@@ -84,21 +78,18 @@ const OrderForm = function ({cartOrder}) {
         }
     };
 
-    // useEffect(() => {
-    //     sendHttpRequest({
-    //         url: 'https://react-course-86712-default-rtdb.europe-west1.firebasedatabase.app/orders.json',
-    //         method: 'POST',
-    //         headers: mainOrder
-    //     })
-    //
-    // }, [orderUserInfo])
-
     return (
         <form onSubmit={OrderFormSubmit} className={styles.orderForm}>
-            <input onChange={nameInputchangeHandler} ref={nameRef} placeholder={'Enter your name'} type={'text'}/>
+            <input
+                ref={nameRef}
+                placeholder={'Enter your name'}
+                type={'text'}/>
+
             <input ref={addressRef} placeholder={'Enter address'} type={'text'}/>
             <input ref={telRef} placeholder={'Enter phone number'} type={'tel'}/>
             <input ref={emailRef} placeholder={'Enter e-mail'} type={'email'}/>
+
+            {!isFormValid ? <p>fill in all fields</p> : ''}
             <button>Send</button>
             {isShowOrderProof ? <p>Data has been sent, expect a manager to call</p> : ''}
         </form>
